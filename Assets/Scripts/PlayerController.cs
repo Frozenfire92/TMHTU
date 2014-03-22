@@ -30,11 +30,6 @@ public class PlayerController : MonoBehaviour
 			nextFireTime = Time.time + fireRate;
 			Instantiate(bullet, bulletSpawn.position, bulletSpawn.rotation);
 		}
-
-		//If Horizontal axis, rotate ship
-		//float rotation = Input.GetAxis("Horizontal") * rotationSpeed;
-		//rotation *= Time.deltaTime; 
-		//transform.Rotate(0, rotation, 0);
 	}
 
 
@@ -43,17 +38,11 @@ public class PlayerController : MonoBehaviour
 	{
 		//Get user input
 		float moveVertical = Input.GetAxis("Vertical");
-		float moveHorizontal = Input.GetAxis ("Horizontal");
+		float moveHorizontal = Input.GetAxis("Horizontal");
 		
 		//Apply input to a Vector3, then apply that vector3 to the ships velocity
 		Vector3 movement = new Vector3(moveHorizontal, 0f, moveVertical);
 		rigidbody.velocity = movement * speed;
-
-		//Get user input
-		//if (Input.GetButton("Accelleration"))
-		//{
-		//	rigidbody.AddForce(Vector3.forward * speed);
-		//}
 
 		//Lock the ship within the game bounds
 		rigidbody.position = new Vector3

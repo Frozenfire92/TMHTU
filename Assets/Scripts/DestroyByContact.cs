@@ -35,14 +35,22 @@ public class DestroyByContact : MonoBehaviour
 			return;
 		}
 
+		if(other.tag == "Planet")
+		{
+			Instantiate(explosion, transform.position, transform.rotation);
+			Destroy(gameObject);
+			return;
+		}
+
 		//Instantiate the explosion
 		Instantiate(explosion, transform.position, transform.rotation);
 
 		//If collision with player, instantiate player explosion and set GameOver state
 		if (other.tag == "Player")
 		{
-			Instantiate(playerExplosion, other.transform.position, other.transform.rotation);
-			gameController.GameOver();
+			//Instantiate(playerExplosion, other.transform.position, other.transform.rotation);
+			//gameController.GameOver();
+			return;
 		}
 
 		//If collision with a bullet add score

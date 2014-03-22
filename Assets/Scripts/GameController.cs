@@ -7,9 +7,9 @@ public class GameController : MonoBehaviour
 	public Vector3 spawnValues; 	//location of where to spawn the asteroid
 
 	public int asteroidCount;		//the amount of asteroids per each wave
-	public float spawnWaitTime;		//the time between asteroids spawning
-	public float startWaitTime; 	//the time the player has to get ready
-	public float waveWaitTime; 		//the time between waves
+//	public float spawnWaitTime;		//the time between asteroids spawning
+//	public float startWaitTime; 	//the time the player has to get ready
+//	public float waveWaitTime; 		//the time between waves
 
 	public GUIText scoreText;		//reference to the GUI score
 	public GUIText restartText;		//reference to the GUI restart
@@ -27,39 +27,50 @@ public class GameController : MonoBehaviour
 		gameOverText.text = "";
 		score = 0;
 		UpdateScore();
-		StartCoroutine(SpawnWaves());
+		//StartCoroutine(SpawnWaves());
+		SpawnAsteroids();
+	}
+
+	void SpawnAsteroids()
+	{
+		for (int i=0; i<asteroidCount; i++)
+		{
+			Vector3 spawnPosition = new Vector3(Random.Range(-spawnValues.x, spawnValues.x), spawnValues.y, Random.Range(-spawnValues.z, spawnValues.z));
+			Quaternion spawnRotation = Quaternion.identity;
+			Instantiate(asteroid, spawnPosition, spawnRotation);
+		}
 	}
 
 	//Coroutine that spawns waves infinitely
-	IEnumerator SpawnWaves()
-	{
-		//give the start wait time
-		yield return new WaitForSeconds(startWaitTime);
-
-		//infinte loop
-		while(true)
-		{
-			//spawn a wave
-			for (int i=0; i<asteroidCount; i++)
-			{
-				Vector3 spawnPosition = new Vector3(Random.Range(-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z);
-				Quaternion spawnRotation = Quaternion.identity;
-				Instantiate(asteroid, spawnPosition, spawnRotation);
-				yield return new WaitForSeconds(spawnWaitTime);
-			}
-
-			//test for gameover
-			if (gameOver)
-			{
-				restartText.text = "Press R to restart";
-				restart = true;
-				break;
-			}
-
-			//wait for next wave
-			yield return new WaitForSeconds(waveWaitTime);
-		}
-	}
+//	IEnumerator SpawnWaves()
+//	{
+//		//give the start wait time
+//		yield return new WaitForSeconds(startWaitTime);
+//
+//		//infinte loop
+//		while(true)
+//		{
+//			//spawn a wave
+//			for (int i=0; i<asteroidCount; i++)
+//			{
+//				Vector3 spawnPosition = new Vector3(Random.Range(-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z);
+//				Quaternion spawnRotation = Quaternion.identity;
+//				Instantiate(asteroid, spawnPosition, spawnRotation);
+//				yield return new WaitForSeconds(spawnWaitTime);
+//			}
+//
+//			//test for gameover
+//			if (gameOver)
+//			{
+//				restartText.text = "Press R to restart";
+//				restart = true;
+//				break;
+//			}
+//
+//			//wait for next wave
+//			yield return new WaitForSeconds(waveWaitTime);
+//		}
+//	}
 
 	//public method to allow the DestroyByContact to add score
 	public void AddScore (int scoreAmount)
